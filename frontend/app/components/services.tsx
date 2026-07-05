@@ -43,7 +43,7 @@ export default function Services() {
   const [active, setActive] = useState(0);
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-6 py-16">
+    <div className="mx-auto w-full max-w-8xl px-6 py-16">
       {/* header */}
       <div className="max-w-2xl">
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">

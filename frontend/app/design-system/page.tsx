@@ -4,7 +4,7 @@ import SystemShowcase, { type ShowcaseConfig } from "./showcase";
 export const metadata: Metadata = {
   title: "Design System — Classic",
   description:
-    "The Classic design system for the MEHRD Resource Hub — Solomon Islands blue and gold, set in Baskervville and Source Sans 3.",
+    "The Classic design system for the iResource — Solomon Islands blue and gold, set in Baskervville and Source Sans 3.",
 };
 
 const classic: ShowcaseConfig = {

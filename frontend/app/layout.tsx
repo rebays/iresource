@@ -16,8 +16,8 @@ const sourceSans = Source_Sans_3({
 
 export const metadata: Metadata = {
   title: {
-    default: "MEHRD Resource Hub | Ministry of Education & Human Resources Development",
-    template: "%s | MEHRD Resource Hub",
+    default: "iResource | Ministry of Education & Human Resources Development",
+    template: "%s | iResource",
   },
   description:
     "The central hub for documents, reports, videos, and public information from the Solomon Islands Ministry of Education and Human Resources Development.",

@@ -2,42 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import Publications from "./components/publications";
 import Services from "./components/services";
+import SiteFooter from "./components/site-footer";
+import SiteHeader from "./components/site-header";
 import TraditionalWatermark from "./components/traditional-watermark";
-
-const categories = [
-  {
-    title: "Policies & Documents",
-    description:
-      "Education policies, acts, frameworks, circulars, and official ministry documents.",
-    href: "/documents",
-    image: "/cat-documents.jpg",
-    count: "320+ documents",
-  },
-  {
-    title: "Reports & Data",
-    description:
-      "Annual reports, statistics, performance reviews, and education sector data.",
-    href: "/reports",
-    image: "/cat-reports.jpg",
-    count: "85+ reports",
-  },
-  {
-    title: "Videos & Media",
-    description:
-      "Recorded events, training materials, announcements, and educational video content.",
-    href: "/videos",
-    image: "/cat-videos.jpg",
-    count: "140+ videos",
-  },
-  {
-    title: "Learning Resources",
-    description:
-      "Curriculum materials, teacher guides, and resources for schools and learners.",
-    href: "/resources",
-    image: "/cat-resources.jpg",
-    count: "500+ resources",
-  },
-];
+import { categories } from "./lib/content";
 
 export default function Home() {
   return (
@@ -56,49 +24,11 @@ export default function Home() {
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_top_right,rgba(8,20,40,0.94),rgba(8,20,40,0.72)_45%,rgba(20,82,155,0.5))]" />
 
         {/* transparent header over hero */}
-        <header className="relative">
-          <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-6">
-            <Link href="/" className="flex items-center gap-3">
-              <Image
-                src="/coa-si.webp"
-                alt="Solomon Islands coat of arms"
-                width={48}
-                height={48}
-                className="h-12 w-auto shrink-0"
-              />
-              <span className="flex flex-col leading-tight">
-                <span className="text-sm font-semibold">MEHRD Resource Hub</span>
-                <span className="text-xs text-white/70">
-                  Ministry of Education &amp; Human Resources Development
-                </span>
-              </span>
-            </Link>
-            <nav className="hidden items-center gap-7 text-sm font-medium md:flex">
-              <Link href="/documents" className="hover:text-accent">
-                Documents
-              </Link>
-              <Link href="/reports" className="hover:text-accent">
-                Reports
-              </Link>
-              <Link href="/videos" className="hover:text-accent">
-                Videos
-              </Link>
-              <Link href="/resources" className="hover:text-accent">
-                Resources
-              </Link>
-              <a
-                href="https://mehrd.gov.sb"
-                className="rounded-full border border-white/40 px-4 py-1.5 hover:border-accent hover:text-accent"
-              >
-                Main site ↗
-              </a>
-            </nav>
-          </div>
-        </header>
+        <SiteHeader variant="overlay" />
 
         {/* hero content */}
         <div className="relative flex flex-1 items-center">
-          <div className="mx-auto w-full max-w-6xl px-6 py-20">
+          <div className="mx-auto w-full max-w-8xl px-6 py-20">
             <h1 className="max-w-4xl font-serif text-5xl leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl">
               Building a brigher future through learning.
             </h1>
@@ -139,7 +69,7 @@ export default function Home() {
       {/* ---------- CATEGORIES (full screen) ---------- */}
       <section className="relative isolate flex min-h-screen items-center overflow-hidden bg-background">
         <TraditionalWatermark id="wm-categories" />
-        <div className="mx-auto w-full max-w-6xl px-6 py-20">
+        <div className="mx-auto w-full max-w-8xl px-6 py-20">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
             Browse the hub
           </p>
@@ -149,8 +79,8 @@ export default function Home() {
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {categories.map((c) => (
               <Link
-                key={c.href}
-                href={c.href}
+                key={c.slug}
+                href={`/resources/${c.slug}`}
                 className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-sm transition-all hover:-translate-y-1.5 hover:border-primary hover:shadow-xl"
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
@@ -200,7 +130,7 @@ export default function Home() {
           className="-z-20 object-cover"
         />
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(8,20,40,0.92),rgba(8,20,40,0.55))]" />
-        <div className="mx-auto w-full max-w-6xl px-6 py-24">
+        <div className="mx-auto w-full max-w-8xl px-6 py-24">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
             Scholarships &amp; study awards
           </p>
@@ -223,7 +153,7 @@ export default function Home() {
               <span aria-hidden>↗</span>
             </a>
             <Link
-              href="/documents"
+              href="/publications"
               className="flex h-14 items-center justify-center rounded-lg border border-white/50 px-8 text-base font-semibold transition-colors hover:border-accent hover:text-accent"
             >
               Scholarship guidelines
@@ -239,74 +169,7 @@ export default function Home() {
       </section>
 
       {/* ---------- FOOTER ---------- */}
-      <footer className="bg-[#0d1f3c] text-white">
-        <div className="mx-auto grid w-full max-w-6xl gap-8 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="sm:col-span-2 lg:col-span-1">
-            <p className="font-serif text-lg text-white">MEHRD Resource Hub</p>
-            <p className="mt-2 text-sm leading-6 text-white/60">
-              Ministry of Education &amp; Human Resources Development, Solomon
-              Islands Government.
-            </p>
-          </div>
-          <div>
-            <p className="text-sm font-semibold text-white">Browse</p>
-            <ul className="mt-3 space-y-2 text-sm text-white/70">
-              <li>
-                <Link href="/documents" className="hover:text-accent">
-                  Documents
-                </Link>
-              </li>
-              <li>
-                <Link href="/reports" className="hover:text-accent">
-                  Reports
-                </Link>
-              </li>
-              <li>
-                <Link href="/videos" className="hover:text-accent">
-                  Videos
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <p className="text-sm font-semibold text-white">Ministry</p>
-            <ul className="mt-3 space-y-2 text-sm text-white/70">
-              <li>
-                <a href="https://mehrd.gov.sb" className="hover:text-accent">
-                  Main website ↗
-                </a>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-accent">
-                  About the hub
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-accent">
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <p className="text-sm font-semibold text-white">Government</p>
-            <ul className="mt-3 space-y-2 text-sm text-white/70">
-              <li>
-                <a href="https://solomons.gov.sb" className="hover:text-accent">
-                  Solomon Islands Government ↗
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="border-t border-white/10">
-          <div className="mx-auto w-full max-w-6xl px-6 py-5 text-xs text-white/50">
-            © {new Date().getFullYear()} Ministry of Education &amp; Human
-            Resources Development, Solomon Islands Government. Hosted on SIG ICT
-            Services · education.gov.sb
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
 
     </div>
   );

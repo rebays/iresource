@@ -99,7 +99,7 @@ function Section({
 }) {
   return (
     <section id={id} className="scroll-mt-24 border-t border-border py-16 sm:py-20">
-      <div className="mx-auto w-full max-w-6xl px-6">
+      <div className="mx-auto w-full max-w-8xl px-6">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
           {eyebrow}
         </p>
@@ -257,7 +257,7 @@ export default function SystemShowcase({ config }: { config: ShowcaseConfig }) {
     <div data-theme={config.themeKey} className="flex flex-1 flex-col bg-background">
       {/* ---------- Sticky header ---------- */}
       <header className="sticky top-0 z-30 border-b border-border bg-background/85 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-4">
+        <div className="mx-auto flex w-full max-w-8xl items-center justify-between gap-4 px-6 py-4">
           <Link href="/" className="flex items-center gap-3">
             <Image
               src="/coa-si.webp"
@@ -267,7 +267,7 @@ export default function SystemShowcase({ config }: { config: ShowcaseConfig }) {
               className="h-9 w-auto shrink-0"
             />
             <span className="flex flex-col leading-tight">
-              <span className="text-sm font-semibold text-foreground">MEHRD Resource Hub</span>
+              <span className="text-sm font-semibold text-foreground">iResource</span>
               <span className="text-[11px] uppercase tracking-[0.18em] text-muted">
                 Design System · {config.name}
               </span>
@@ -288,9 +288,9 @@ export default function SystemShowcase({ config }: { config: ShowcaseConfig }) {
       {/* ---------- Intro ---------- */}
       <section className="relative isolate overflow-hidden border-b border-border">
         <TraditionalWatermark id={`wm-ds-${config.themeKey}`} corners={["top-right", "bottom-left"]} />
-        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24">
+        <div className="mx-auto w-full max-w-8xl px-6 py-20 sm:py-24">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-            MEHRD Resource Hub · {config.name} system
+            iResource · {config.name} system
           </p>
           <h1 className="mt-4 max-w-3xl font-serif text-5xl leading-[1.05] tracking-tight text-foreground sm:text-6xl">
             Design System
@@ -631,16 +631,15 @@ export default function SystemShowcase({ config }: { config: ShowcaseConfig }) {
               <div className="flex items-center justify-between gap-4 bg-background px-6 py-4">
                 <div className="flex items-center gap-3">
                   <Image src="/coa-si.webp" alt="" width={32} height={32} className="h-8 w-auto" />
-                  <span className="text-sm font-semibold text-foreground">MEHRD Resource Hub</span>
+                  <span className="text-sm font-semibold text-foreground">iResource</span>
                 </div>
                 <nav className="hidden items-center gap-6 text-sm font-medium text-muted md:flex">
-                  <span className="text-primary">Documents</span>
-                  <span className="hover:text-primary">Reports</span>
-                  <span className="hover:text-primary">Videos</span>
-                  <span className="hover:text-primary">Resources</span>
-                  <span className="inline-flex items-center gap-1 rounded-full border border-border px-4 py-1.5 text-foreground">
-                    Main site
-                    <Icon path={Ic.external} className="h-3.5 w-3.5" />
+                  <span className="text-primary">Resources</span>
+                  <span className="hover:text-primary">Publications</span>
+                  <span className="hover:text-primary">News</span>
+                  <span className="inline-flex items-center gap-1.5">
+                    About
+                    <Icon path={Ic.chevron} className="h-3.5 w-3.5 rotate-90" />
                   </span>
                 </nav>
               </div>
@@ -653,15 +652,15 @@ export default function SystemShowcase({ config }: { config: ShowcaseConfig }) {
               >
                 <div className="flex items-center gap-3">
                   <Image src="/coa-si.webp" alt="" width={32} height={32} className="h-8 w-auto" />
-                  <span className="text-sm font-semibold">MEHRD Resource Hub</span>
+                  <span className="text-sm font-semibold">iResource</span>
                 </div>
                 <nav className="hidden items-center gap-6 text-sm font-medium text-white/80 md:flex">
-                  <span className="text-white">Documents</span>
-                  <span className="hover:text-accent">Reports</span>
-                  <span className="hover:text-accent">Videos</span>
-                  <span className="inline-flex items-center gap-1 rounded-full border border-white/40 px-4 py-1.5">
-                    Main site
-                    <Icon path={Ic.external} className="h-3.5 w-3.5" />
+                  <span className="text-white">Resources</span>
+                  <span className="hover:text-accent">Publications</span>
+                  <span className="hover:text-accent">News</span>
+                  <span className="inline-flex items-center gap-1.5">
+                    About
+                    <Icon path={Ic.chevron} className="h-3.5 w-3.5 rotate-90" />
                   </span>
                 </nav>
               </div>
@@ -725,8 +724,8 @@ export default function SystemShowcase({ config }: { config: ShowcaseConfig }) {
 
       {/* ---------- Footer ---------- */}
       <footer className="border-t border-border text-white" style={{ backgroundColor: config.deep }}>
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-6 py-10">
-          <p className="font-serif text-lg">MEHRD Resource Hub · {config.name} Design System</p>
+        <div className="mx-auto flex w-full max-w-8xl flex-col gap-2 px-6 py-10">
+          <p className="font-serif text-lg">iResource · {config.name} Design System</p>
           <p className="text-sm text-white/60">
             Ministry of Education &amp; Human Resources Development, Solomon Islands Government.
           </p>

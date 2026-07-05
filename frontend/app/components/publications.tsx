@@ -2,6 +2,11 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import {
+  getResource,
+  publications as libPublications,
+  resourceHref,
+} from "../lib/content";
 
 type PubType = "Policy" | "Report" | "Video";
 
@@ -15,68 +20,30 @@ type Publication = {
   href: string;
 };
 
-const publications: Publication[] = [
-  {
-    title: "National Education Action Plan 2026–2030",
-    type: "Policy",
-    date: "12 May 2026",
-    format: "PDF",
-    size: "3.2 MB",
-    excerpt:
-      "The Ministry's five-year strategy for improving access, quality, and equity across the education sector.",
-    href: "/documents/neap-2026-2030",
-  },
-  {
-    title: "Education Sector Annual Performance Report 2025",
-    type: "Report",
-    date: "28 Apr 2026",
-    format: "PDF",
-    size: "5.1 MB",
-    excerpt:
-      "Enrolment, completion, and learning-outcome data measured against national education targets.",
-    href: "/reports/annual-performance-2025",
-  },
-  {
-    title: "Teacher Professional Development Series",
+/* Publication pages from the shared content module, plus the featured
+   training video from the resource library, in recency order. */
+const publications: Publication[] = libPublications.map((p) => ({
+  title: p.title,
+  type: p.type === "Report" ? "Report" : "Policy",
+  date: p.date,
+  format: p.format,
+  size: p.size,
+  excerpt: p.summary,
+  href: `/publications/${p.slug}`,
+}));
+
+const tpd = getResource("videos", "tpd-series");
+if (tpd) {
+  publications.splice(2, 0, {
+    title: tpd.title,
     type: "Video",
-    date: "9 Mar 2026",
-    format: "MP4",
-    size: "14 min",
-    excerpt:
-      "Recorded training supporting classroom practice and the rollout of the national curriculum.",
-    href: "/videos/tpd-series",
-  },
-  {
-    title: "National Curriculum Framework — Primary",
-    type: "Policy",
-    date: "2 Mar 2026",
-    format: "PDF",
-    size: "2.4 MB",
-    excerpt:
-      "Learning standards and subject outcomes for primary schools across the Solomon Islands.",
-    href: "/documents/curriculum-framework-primary",
-  },
-  {
-    title: "Early Childhood Education Statistics 2025",
-    type: "Report",
-    date: "30 Jan 2026",
-    format: "PDF",
-    size: "4.7 MB",
-    excerpt:
-      "Provincial enrolment and access data for early childhood education providers.",
-    href: "/reports/ece-statistics-2025",
-  },
-  {
-    title: "School Infrastructure Grants — Guidelines",
-    type: "Policy",
-    date: "18 Jan 2026",
-    format: "PDF",
-    size: "1.1 MB",
-    excerpt:
-      "Eligibility criteria and the application process for the 2026 school infrastructure grant round.",
-    href: "/documents/infrastructure-grants-guidelines",
-  },
-];
+    date: tpd.published,
+    format: tpd.format,
+    size: tpd.size,
+    excerpt: tpd.summary,
+    href: resourceHref(tpd),
+  });
+}
 
 const typeMeta: Record<
   PubType,
@@ -171,7 +138,7 @@ export default function Publications() {
   const [featured, ...rest] = list;
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-6 py-16">
+    <div className="mx-auto w-full max-w-8xl px-6 py-16">
       {/* header */}
       <div className="flex flex-wrap items-end justify-between gap-6">
         <div>
@@ -183,7 +150,7 @@ export default function Publications() {
           </h2>
         </div>
         <Link
-          href="/documents"
+          href="/publications"
           className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
         >
           Browse the full library

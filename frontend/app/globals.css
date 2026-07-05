@@ -36,6 +36,9 @@
 }
 
 @theme inline {
+  /* Site container width (max-w-8xl) */
+  --container-8xl: 90rem;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-surface: var(--surface);

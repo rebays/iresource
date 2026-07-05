@@ -1,0 +1,87 @@
+import Link from "next/link";
+
+export default function SiteFooter() {
+  return (
+    <footer className="bg-deep text-white">
+      <div className="mx-auto grid w-full max-w-8xl gap-8 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="sm:col-span-2 lg:col-span-1">
+          <p className="font-serif text-lg text-white">iResource</p>
+          <p className="mt-2 text-sm leading-6 text-white/60">
+            Ministry of Education &amp; Human Resources Development, Solomon
+            Islands Government.
+          </p>
+        </div>
+        <div>
+          <p className="text-sm font-semibold text-white">Browse</p>
+          <ul className="mt-3 space-y-2 text-sm text-white/70">
+            <li>
+              <Link href="/resources" className="hover:text-accent">
+                Resource library
+              </Link>
+            </li>
+            <li>
+              <Link href="/publications" className="hover:text-accent">
+                Policies &amp; publications
+              </Link>
+            </li>
+            <li>
+              <Link href="/news" className="hover:text-accent">
+                News
+              </Link>
+            </li>
+            <li>
+              <Link href="/search" className="hover:text-accent">
+                Search
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <p className="text-sm font-semibold text-white">Ministry</p>
+          <ul className="mt-3 space-y-2 text-sm text-white/70">
+            <li>
+              <a href="https://mehrd.gov.sb" className="hover:text-accent">
+                Main website ↗
+              </a>
+            </li>
+            <li>
+              <Link href="/about/services" className="hover:text-accent">
+                Services
+              </Link>
+            </li>
+            <li>
+              <Link href="/about/contact" className="hover:text-accent">
+                Contact
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <p className="text-sm font-semibold text-white">Government</p>
+          <ul className="mt-3 space-y-2 text-sm text-white/70">
+            <li>
+              <a href="https://solomons.gov.sb" className="hover:text-accent">
+                Solomon Islands Government ↗
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://scholarships.education.gov.sb"
+                className="hover:text-accent"
+              >
+                Scholarships portal ↗
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div className="border-t border-white/10">
+        <div className="mx-auto w-full max-w-8xl px-6 py-5 text-xs text-white/50">
+          © {new Date().getFullYear()} Ministry of Education &amp; Human
+          Resources Development, Solomon Islands Government. Hosted on SIG ICT
+          Services · education.gov.sb
+        </div>
+      </div>
+    </footer>
+  );
+}
