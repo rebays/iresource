@@ -26,6 +26,8 @@ type ResourceCardBase = {
   meta: string
   badges: ResourceCardBadge[]
   className?: string
+  /** Wraps the title in a link, e.g. to a detail page. */
+  href?: string
 }
 
 type ResourceCardProps = ResourceCardBase &
@@ -36,7 +38,7 @@ type ResourceCardProps = ResourceCardBase &
 
 /** The hub's core listing unit — documents, reports, and videos share this shell. */
 function ResourceCard(props: ResourceCardProps) {
-  const { title, description, meta, badges, className } = props
+  const { title, description, meta, badges, className, href } = props
 
   return (
     <article
@@ -89,7 +91,13 @@ function ResourceCard(props: ResourceCardProps) {
           </div>
         )}
         <h4 className="font-serif text-xl leading-snug text-foreground group-hover:text-primary">
-          {title}
+          {href ? (
+            <Link href={href} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
+              {title}
+            </Link>
+          ) : (
+            title
+          )}
         </h4>
         <p className="mt-2 flex-1 text-[15px] leading-relaxed text-muted">{description}</p>
         <p className="mt-4 font-mono text-[12px] text-muted">{meta}</p>
@@ -102,6 +110,7 @@ function ResourceCard(props: ResourceCardProps) {
                 size="sm"
                 variant={a.variant ?? "primary"}
                 onClick={a.onClick}
+                nativeButton={!a.href}
                 render={a.href ? <Link href={a.href} /> : undefined}
               >
                 {a.icon && <Icon name={a.icon} className="h-4 w-4" />}
