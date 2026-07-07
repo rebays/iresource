@@ -66,7 +66,7 @@ export default function CategoryTabs({
                         type="button"
                         onClick={() => choose(id)}
                         aria-current={isActive ? "true" : undefined}
-                        className={`-ml-px block w-full border-l-2 py-1.5 pl-4 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                        className={`-ml-px block w-full cursor-pointer border-l-2 py-1.5 pl-4 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                           isActive
                             ? "border-primary font-semibold text-primary"
                             : "border-transparent text-muted hover:border-border hover:text-foreground"
@@ -94,7 +94,7 @@ export default function CategoryTabs({
                   type="button"
                   onClick={() => choose(id)}
                   aria-current={isActive ? "true" : undefined}
-                  className={`shrink-0 rounded-full px-4 py-1.5 text-sm font-semibold transition-colors ${
+                  className={`shrink-0 cursor-pointer rounded-full px-4 py-1.5 text-sm font-semibold transition-colors ${
                     isActive
                       ? "bg-primary text-primary-foreground"
                       : "bg-surface text-foreground hover:bg-surface-2"

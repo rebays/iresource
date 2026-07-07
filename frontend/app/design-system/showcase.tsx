@@ -179,15 +179,13 @@ export default function SystemShowcase({ config }: { config: ShowcaseConfig }) {
             <Image
               src="/coat-of-arms.png"
               alt="Solomon Islands coat of arms"
-              width={36}
-              height={36}
-              className="h-9 w-auto shrink-0"
+              width={48}
+              height={48}
+              className="h-12 w-auto shrink-0"
             />
             <span className="flex flex-col leading-tight">
               <span className="text-sm font-semibold text-foreground">iResource</span>
-              <span className="text-[11px] uppercase tracking-[0.18em] text-muted">
-                Design System
-              </span>
+              <span className="text-xs text-muted">Design System</span>
             </span>
           </Link>
         </div>
@@ -567,8 +565,11 @@ export default function SystemShowcase({ config }: { config: ShowcaseConfig }) {
             <div className="overflow-hidden rounded-2xl border border-border">
               <div className="flex items-center justify-between gap-4 bg-background px-6 py-4">
                 <div className="flex items-center gap-3">
-                  <Image src="/coat-of-arms.png" alt="" width={32} height={32} className="h-8 w-auto" />
-                  <span className="text-sm font-semibold text-foreground">iResource</span>
+                  <Image src="/coat-of-arms.png" alt="" width={48} height={48} className="h-12 w-auto shrink-0" />
+                  <span className="flex flex-col leading-tight">
+                    <span className="text-sm font-semibold text-foreground">iResource</span>
+                    <span className="text-xs text-muted">MEHRD</span>
+                  </span>
                 </div>
                 <div className="relative hidden max-w-56 flex-1 lg:block">
                   <Icon
@@ -591,8 +592,11 @@ export default function SystemShowcase({ config }: { config: ShowcaseConfig }) {
             <div className="overflow-hidden rounded-2xl">
               <div className="flex items-center justify-between gap-4 bg-deep px-6 py-4 text-white">
                 <div className="flex items-center gap-3">
-                  <Image src="/coat-of-arms.png" alt="" width={32} height={32} className="h-8 w-auto" />
-                  <span className="text-sm font-semibold">iResource</span>
+                  <Image src="/coat-of-arms.png" alt="" width={48} height={48} className="h-12 w-auto shrink-0" />
+                  <span className="flex flex-col leading-tight">
+                    <span className="text-sm font-semibold">iResource</span>
+                    <span className="text-xs text-white/70">MEHRD</span>
+                  </span>
                 </div>
                 <nav className="hidden items-center gap-6 text-sm font-medium text-white/80 md:flex">
                   <span className="text-white">Resources</span>
