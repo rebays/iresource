@@ -14,8 +14,8 @@ export function DownloadActions({ resource }: { resource: CurriculumResource }) 
   const [copied, setCopied] = useState(false);
 
   return (
-    <div className="flex flex-col gap-3 sm:flex-row">
-      <Button size="lg" className="flex-1 sm:flex-none">
+    <div className="flex flex-col gap-3">
+      <Button size="lg" className="w-full">
         <Icon name="download" className="h-4 w-4" />
         Download {resource.format}
         <span className="font-normal opacity-75">· {resource.size}</span>
@@ -23,6 +23,7 @@ export function DownloadActions({ resource }: { resource: CurriculumResource }) 
       <Button
         size="lg"
         variant="secondary"
+        className="w-full"
         onClick={() => {
           setCopied(true);
           setTimeout(() => setCopied(false), 2500);

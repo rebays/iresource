@@ -77,13 +77,16 @@ export default async function CurriculumResourcePage({
           {/* preview */}
           <div className="min-w-0">
             <ResourcePreviewer key={resource.id} resource={resource} />
-            <div className="mt-6">
-              <DownloadActions resource={resource} />
+            <div className="mt-8">
+              <h2 className="text-sm font-semibold uppercase tracking-[0.14em] text-foreground/70">
+                Description
+              </h2>
+              <p className="mt-3 text-[15px] leading-relaxed text-muted">{resource.summary}</p>
             </div>
           </div>
 
           {/* metadata sidebar */}
-          <aside className="lg:pt-1">
+          <aside className="flex flex-col gap-6 lg:pt-1">
             <div className="rounded-2xl border border-border bg-surface p-6">
               <h2 className="text-sm font-semibold uppercase tracking-[0.14em] text-foreground/70">
                 Details
@@ -102,6 +105,8 @@ export default async function CurriculumResourcePage({
                 ))}
               </dl>
             </div>
+
+            <DownloadActions resource={resource} />
           </aside>
         </div>
 

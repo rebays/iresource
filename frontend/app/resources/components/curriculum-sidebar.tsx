@@ -1,13 +1,16 @@
-import { cn } from "@/lib/utils";
+import { Label } from "@/components/ui/label";
+import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 import type { Grade, ResourceType, Subject } from "../../lib/curriculum";
 
-function FilterGroup<T extends string>({
+function FilterSelect<T extends string>({
+  id,
   label,
   options,
   active,
   onChange,
   optionLabel,
 }: {
+  id: string;
   label: string;
   options: T[];
   active: T | null;
@@ -15,38 +18,24 @@ function FilterGroup<T extends string>({
   optionLabel: (value: T) => string;
 }) {
   return (
-    <fieldset>
-      <legend className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-foreground/70">
+    <div>
+      <Label htmlFor={id} className="mb-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-foreground/70">
         {label}
-      </legend>
-      <div className="flex flex-col gap-1">
-        <button
-          type="button"
-          onClick={() => onChange(null)}
-          aria-pressed={active === null}
-          className={cn(
-            "rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
-            active === null ? "bg-primary/10 text-primary" : "text-muted hover:bg-surface-2 hover:text-foreground"
-          )}
-        >
-          All
-        </button>
+      </Label>
+      <NativeSelect
+        id={id}
+        className="w-full"
+        value={active ?? ""}
+        onChange={(e) => onChange((e.target.value || null) as T | null)}
+      >
+        <NativeSelectOption value="">All</NativeSelectOption>
         {options.map((opt) => (
-          <button
-            key={opt}
-            type="button"
-            onClick={() => onChange(opt)}
-            aria-pressed={active === opt}
-            className={cn(
-              "rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
-              active === opt ? "bg-primary/10 text-primary" : "text-muted hover:bg-surface-2 hover:text-foreground"
-            )}
-          >
+          <NativeSelectOption key={opt} value={opt}>
             {optionLabel(opt)}
-          </button>
+          </NativeSelectOption>
         ))}
-      </div>
-    </fieldset>
+      </NativeSelect>
+    </div>
   );
 }
 
@@ -54,6 +43,7 @@ export type CurriculumFilters = {
   type: ResourceType | null;
   subjectId: string | null;
   gradeId: string | null;
+  query: string;
 };
 
 export function CurriculumSidebar({
@@ -71,10 +61,10 @@ export function CurriculumSidebar({
   onFilterChange: (patch: Partial<CurriculumFilters>) => void;
   onReset: () => void;
 }) {
-  const hasActiveFilters = filters.type || filters.subjectId || filters.gradeId;
+  const hasActiveFilters = filters.type || filters.subjectId || filters.gradeId || filters.query;
 
   return (
-    <aside className="flex w-full shrink-0 flex-col gap-6 lg:w-64">
+    <aside className="flex w-full shrink-0 flex-col gap-5 lg:w-64">
       <div className="flex items-center justify-between">
         <h2 className="text-sm font-semibold uppercase tracking-[0.14em] text-foreground/70">
           Filters
@@ -90,7 +80,8 @@ export function CurriculumSidebar({
         )}
       </div>
 
-      <FilterGroup
+      <FilterSelect
+        id="filter-resource-type"
         label="Resource type"
         options={resourceTypes}
         active={filters.type}
@@ -98,7 +89,8 @@ export function CurriculumSidebar({
         optionLabel={(t) => t}
       />
 
-      <FilterGroup
+      <FilterSelect
+        id="filter-subject"
         label="Subject"
         options={subjects.map((s) => s.id)}
         active={filters.subjectId}
@@ -106,7 +98,8 @@ export function CurriculumSidebar({
         optionLabel={(id) => subjects.find((s) => s.id === id)?.name ?? id}
       />
 
-      <FilterGroup
+      <FilterSelect
+        id="filter-grade"
         label="Grade / year level"
         options={grades.map((g) => g.id)}
         active={filters.gradeId}

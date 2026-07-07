@@ -231,12 +231,15 @@ export function getCurriculumResources(filter: {
   subjectId?: string | null;
   gradeId?: string | null;
   type?: ResourceType | null;
+  query?: string | null;
 }): CurriculumResource[] {
+  const q = filter.query?.trim().toLowerCase();
   return curriculumResources.filter((r) => {
     if (r.level !== filter.level) return false;
     if (filter.subjectId && r.subjectId !== filter.subjectId) return false;
     if (filter.gradeId && r.gradeId !== filter.gradeId) return false;
     if (filter.type && r.type !== filter.type) return false;
+    if (q && !r.title.toLowerCase().includes(q)) return false;
     return true;
   });
 }
