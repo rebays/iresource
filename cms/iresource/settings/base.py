@@ -28,6 +28,9 @@ INSTALLED_APPS = [
     "search",
     "resources",
     "menu",
+    "grapple",
+    "graphene_django",
+    "wagtail_headless_preview",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
@@ -163,6 +166,16 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10_000
 # Wagtail settings
 
 WAGTAIL_SITE_NAME = "iresource"
+
+# Grapple / GraphQL
+GRAPHENE = {
+    "SCHEMA": "grapple.schema.schema",
+}
+GRAPPLE = {
+    "APPS": ["home", "menu", "resources"],
+    "RICH_TEXT_FORMAT": "html",
+    "EXPOSE_GRAPHIQL": True,
+}
 
 # Search
 # https://docs.wagtail.org/en/stable/topics/search/backends.html
