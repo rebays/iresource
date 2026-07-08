@@ -19,7 +19,13 @@ export default function Publications() {
   ];
 
   return (
-    <div className="mx-auto grid w-full max-w-8xl items-center gap-16 px-6 py-24 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+    <div className="relative mx-auto grid w-full max-w-8xl items-center gap-16 px-6 py-24 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+      {/* tema silhouette — quiet corner accent, bottom-right of the section */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute right-6 -bottom-24 hidden h-56 w-56 rotate-180 bg-[url('/tema.jpeg')] bg-contain bg-bottom-right bg-no-repeat opacity-[0.06] sm:block lg:h-72 lg:w-72"
+      />
+
       {/* left — words */}
       <div>
         <h2 className="font-serif text-4xl leading-tight tracking-tight text-foreground sm:text-5xl">

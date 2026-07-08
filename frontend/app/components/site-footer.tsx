@@ -141,7 +141,13 @@ export default function SiteFooter() {
         </div>
       </div>
 
-      <div className="border-t border-white/10">
+      {/* traditional border strip, tiled full-width above the copyright bar */}
+      <div
+        aria-hidden
+        className="h-14 bg-[url('/BFlong-strip.png')] bg-repeat-x opacity-20 [background-size:auto_100%] [filter:invert(1)]"
+      />
+
+      <div>
         <div className="mx-auto flex w-full max-w-8xl flex-col gap-2 px-6 py-9 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
           <span className="inline-flex flex-wrap items-center gap-x-6">
             <span>© {new Date().getFullYear()}</span>

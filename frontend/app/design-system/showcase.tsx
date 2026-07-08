@@ -87,6 +87,7 @@ const anchors = [
   ["colors", "Colors", "Foundations"],
   ["typography", "Typography", "Foundations"],
   ["foundations", "Spacing & shape", "Foundations"],
+  ["motifs", "Traditional designs", "Foundations"],
   ["controls", "Controls & forms", "Components"],
   ["search", "Search & filters", "Components"],
   ["navigation", "Navigation & structure", "Components"],
@@ -351,6 +352,103 @@ export default function SystemShowcase({ config }: { config: ShowcaseConfig }) {
               className="opacity-[0.12]"
             />
           </div>
+        </div>
+      </Section>
+
+      {/* ---------- Traditional designs ---------- */}
+      <Section
+        id="motifs"
+        eyebrow="Foundations"
+        title="Traditional designs"
+        intro="Beyond the hand-drawn SVG watermark above, four photographed and illustrated Solomon Islands motifs — woven mat patterns, and panpipe and tema silhouettes — carry the same cultural language across hero, header, footer, and section backgrounds. Same recipe every time: strip the source art's white background into the surface behind it, then fade the edges so nothing sits in a hard-edged box."
+      >
+        <div className="grid gap-10 sm:grid-cols-2">
+          <div>
+            <SubHead>Hero background — Isabel mat weave</SubHead>
+            <p className="mb-4 text-[15px] leading-relaxed text-muted">
+              Full-bleed behind the landing hero at 5% opacity, inverted so
+              the illustration&apos;s white ground disappears into the navy
+              and the weave reads as pale texture, radially masked to fade
+              out toward the centre where the title and search sit.
+            </p>
+            <div className="relative isolate h-56 overflow-hidden rounded-2xl border border-border bg-deep">
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-[url('/isabel-mat-crop.jpeg')] bg-cover bg-center bg-no-repeat opacity-[0.14] [filter:invert(1)] [mask-image:radial-gradient(140%_100%_at_50%_15%,#000_0%,transparent_65%)] [-webkit-mask-image:radial-gradient(140%_100%_at_50%_15%,#000_0%,transparent_65%)]"
+              />
+            </div>
+            <p className="mt-2 font-mono text-[11px] text-muted">
+              isabel-mat-crop.jpeg · 5% opacity · invert · radial mask
+            </p>
+          </div>
+
+          <div>
+            <SubHead>Page header — woven column</SubHead>
+            <p className="mb-4 text-[15px] leading-relaxed text-muted">
+              Every inner-page title band carries this on its right side at
+              14% opacity, fading to plain navy on the left via a linear
+              mask so it never fights the title and lead text.
+            </p>
+            <div className="relative isolate h-56 overflow-hidden rounded-2xl border border-border bg-deep">
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-[url('/traditional-column-horizontal.jpeg')] bg-cover bg-right bg-no-repeat opacity-[0.2] [filter:invert(1)] [mask-image:linear-gradient(to_right,transparent_0%,transparent_35%,#000_75%)] [-webkit-mask-image:linear-gradient(to_right,transparent_0%,transparent_35%,#000_75%)]"
+              />
+            </div>
+            <p className="mt-2 font-mono text-[11px] text-muted">
+              traditional-column-horizontal.jpeg · 14% opacity · invert · linear mask
+            </p>
+          </div>
+
+          <div>
+            <SubHead>Footer border strip</SubHead>
+            <p className="mb-4 text-[15px] leading-relaxed text-muted">
+              A tiled diamond-lattice strip dividing the footer&apos;s link
+              columns from the copyright bar — the one motif meant to be
+              seen plainly rather than sensed, at 20% opacity.
+            </p>
+            <div className="relative isolate flex h-56 items-center overflow-hidden rounded-2xl border border-border bg-deep">
+              <div
+                aria-hidden
+                className="h-14 w-full bg-[url('/BFlong-strip.png')] bg-repeat-x opacity-20 [background-size:auto_100%] [filter:invert(1)]"
+              />
+            </div>
+            <p className="mt-2 font-mono text-[11px] text-muted">
+              BFlong-strip.png · 20% opacity · invert · tiled
+            </p>
+          </div>
+
+          <div>
+            <SubHead>Section accent — tema</SubHead>
+            <p className="mb-4 text-[15px] leading-relaxed text-muted">
+              A single tema silhouette anchors the landing page&apos;s
+              Latest Publications section, bottom-right and rotated 180°,
+              at 6% opacity against the light surface tone — no invert
+              needed here, since the source&apos;s own near-white
+              background already matches.
+            </p>
+            <div className="relative isolate h-56 overflow-hidden rounded-2xl border border-border bg-surface">
+              <div
+                aria-hidden
+                className="absolute -bottom-6 right-4 h-44 w-44 rotate-180 bg-[url('/tema.jpeg')] bg-contain bg-bottom-right bg-no-repeat opacity-[0.14]"
+              />
+            </div>
+            <p className="mt-2 font-mono text-[11px] text-muted">
+              tema.jpeg · 6% opacity · rotate-180 · no invert
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-10 rounded-2xl border border-border bg-surface p-6">
+          <SubHead>Recipe</SubHead>
+          <ul className="grid gap-2 text-[15px] leading-relaxed text-muted sm:grid-cols-2">
+            <li>· Source art is black line-work on a white/near-white ground.</li>
+            <li>· On dark surfaces, filter: invert(1) flips it to pale-on-navy so the white ground disappears.</li>
+            <li>· On light surfaces matching the source&apos;s own ground, no invert is needed.</li>
+            <li>· A mask-image gradient — radial, linear, or none — replaces hard rectangular edges with a fade.</li>
+            <li>· Opacity stays low, 5–20%, scaled to whether the motif is ambience or a deliberate accent.</li>
+            <li>· Every instance is aria-hidden and pointer-events-none — decoration, never content.</li>
+          </ul>
         </div>
       </Section>
 
