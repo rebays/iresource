@@ -23,7 +23,7 @@ export default function Publications() {
       {/* tema silhouette — quiet corner accent, bottom-right of the section */}
       <div
         aria-hidden
-        className="pointer-events-none absolute right-6 -bottom-24 hidden h-56 w-56 rotate-180 bg-[url('/tema.jpeg')] bg-contain bg-bottom-right bg-no-repeat opacity-[0.06] sm:block lg:h-72 lg:w-72"
+        className="pointer-events-none absolute right-0 bottom-0 hidden h-[448px] w-[448px] rotate-180 bg-[url('/tema.jpeg')] bg-contain bg-bottom-right bg-no-repeat opacity-[0.06] sm:block sm:h-[576px] sm:w-[576px]"
       />
 
       {/* left — words */}

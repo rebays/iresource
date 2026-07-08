@@ -30,6 +30,7 @@ export const icons = {
   grid: "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z",
   tag: "M4 4h7l9 9-7 7-9-9V4Z M7.5 7.5v.01",
   info: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18ZM12 11v6M12 7.5v.5",
+  expand: "M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5",
 } as const
 
 export type IconName = keyof typeof icons
