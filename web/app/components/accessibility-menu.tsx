@@ -46,7 +46,7 @@ export function AccessibilityMenu() {
   }, [open]);
 
   return (
-    <div className="fixed right-6 bottom-6 z-50">
+    <div className="fixed right-6 bottom-6 z-50 hidden sm:block">
       {open && (
         <div
           ref={panelRef}
