@@ -1,11 +1,20 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
-import { categories } from "../lib/content";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import {
+  categories,
+  getCategory,
+  resourceHref,
+  searchContent,
+  type SearchResult,
+} from "../lib/content";
 import { useShortcutEntry } from "./shortcuts-provider";
 import { useKeyShortcut } from "../hooks/use-key-shortcut";
 import { useSearchShortcut } from "../hooks/use-search-shortcut";
-import { Kbd } from "@/components/ui/kbd";
+import { Icon, type IconName } from "@/components/ui/icon";
+import { cn } from "@/lib/utils";
 import {
   Select,
   SelectContent,
@@ -14,12 +23,43 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+const MAX_SUGGESTIONS = 6;
+
+function resultHref(result: SearchResult): string {
+  if (result.kind === "resource") return resourceHref(result.item);
+  if (result.kind === "publication") return `/publications/${result.item.slug}`;
+  return `/news/${result.item.slug}`;
+}
+
+function resultIcon(result: SearchResult): IconName {
+  const kind = result.kind === "resource" ? result.item.kind : result.kind === "publication" ? result.item.type : "";
+  if (kind === "Video") return "video";
+  if (kind === "Report") return "report";
+  if (result.kind === "news") return "calendar";
+  return "document";
+}
+
+function resultMeta(result: SearchResult): { chip: string; detail: string; title: string } {
+  if (result.kind === "resource") {
+    const cat = getCategory(result.item.category);
+    return { chip: cat?.shortTitle ?? "Resource", detail: result.item.kind, title: result.item.title };
+  }
+  if (result.kind === "publication") {
+    return { chip: "Publication", detail: result.item.type, title: result.item.title };
+  }
+  return { chip: "News", detail: result.item.category, title: result.item.title };
+}
+
 /**
  * The flagship search bar from the landing hero, shared with the search
  * results page: a full pill on white with the curriculum-level scope inline
  * behind a hairline divider and a gold round submit. Designed for dark
  * (deep-blue) surfaces. Layout (width, margins, centring) comes from
  * `className`.
+ *
+ * As the user types, matching resources/publications/news appear in an
+ * instant-results panel beneath the bar (via `searchContent`) so they can
+ * jump straight to an item without waiting for the full results page.
  */
 export default function HeroSearch({
   defaultQuery = "",
@@ -33,11 +73,23 @@ export default function HeroSearch({
   /** Id for the curriculum-level select — override when rendering more than one instance per page. */
   id?: string;
 }) {
+  const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const [hasText, setHasText] = useState(Boolean(defaultQuery));
+  const panelRef = useRef<HTMLDivElement>(null);
+  const listboxId = useId();
+
+  const [query, setQuery] = useState(defaultQuery);
   const [levelOpen, setLevelOpen] = useState(false);
+  const [suggestOpen, setSuggestOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
+
+  const results = useMemo(
+    () => (query.trim() ? searchContent(query).slice(0, MAX_SUGGESTIONS) : []),
+    [query]
+  );
+  const showPanel = suggestOpen && results.length > 0;
 
   useSearchShortcut(inputRef, "s", !levelOpen);
   useShortcutEntry("M", "Open level filter");
@@ -45,42 +97,93 @@ export default function HeroSearch({
 
   const handleOpenFilter = useCallback(() => {
     setLevelOpen(true);
+    setSuggestOpen(false);
     triggerRef.current?.focus();
   }, []);
   useKeyShortcut("m", handleOpenFilter);
+
+  useEffect(() => {
+    setActiveIndex(-1);
+  }, [query]);
+
+  // Keep the field in sync when a new `defaultQuery` arrives without this
+  // component remounting (e.g. client-side nav to a different `?q=` on the
+  // search results page).
+  useEffect(() => {
+    setQuery(defaultQuery);
+  }, [defaultQuery]);
+
+  useEffect(() => {
+    if (!showPanel) return;
+
+    function handlePointerDown(e: PointerEvent) {
+      const target = e.target as Node;
+      if (panelRef.current?.contains(target) || inputRef.current?.contains(target)) {
+        return;
+      }
+      setSuggestOpen(false);
+    }
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [showPanel]);
+
+  const goToResult = useCallback(
+    (result: SearchResult) => {
+      setSuggestOpen(false);
+      router.push(resultHref(result));
+    },
+    [router]
+  );
 
   return (
     <form
       ref={formRef}
       action="/search"
       role="search"
-      className={`group flex h-14 w-full items-center rounded-full border border-white/20 bg-white/95 pl-6 pr-1.5 focus-within:ring-2 focus-within:ring-accent ${className}`}
+      className={`group relative flex h-14 w-full items-center rounded-full border border-white/20 bg-white/95 pl-6 pr-1.5 focus-within:ring-2 focus-within:ring-accent ${className}`}
     >
       <div className="relative flex min-w-0 flex-1 items-center">
         <input
-          key={defaultQuery}
           ref={inputRef}
           type="search"
           name="q"
-          defaultValue={defaultQuery}
+          value={query}
           placeholder="Search documents, reports, videos…"
           aria-label="Search the resource hub"
-          onChange={(e) => setHasText(e.target.value.length > 0)}
+          role="combobox"
+          aria-expanded={showPanel}
+          aria-controls={listboxId}
+          aria-activedescendant={
+            activeIndex >= 0 ? `${listboxId}-option-${activeIndex}` : undefined
+          }
+          autoComplete="off"
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setSuggestOpen(true);
+          }}
+          onFocus={() => {
+            if (query.trim()) setSuggestOpen(true);
+          }}
+          onKeyDown={(e) => {
+            if (!showPanel) return;
+            if (e.key === "ArrowDown") {
+              e.preventDefault();
+              setActiveIndex((i) => (i + 1) % results.length);
+            } else if (e.key === "ArrowUp") {
+              e.preventDefault();
+              setActiveIndex((i) => (i - 1 + results.length) % results.length);
+            } else if (e.key === "Enter") {
+              if (activeIndex >= 0 && results[activeIndex]) {
+                e.preventDefault();
+                goToResult(results[activeIndex]);
+              }
+            } else if (e.key === "Escape") {
+              setSuggestOpen(false);
+            }
+          }}
           className="h-full w-full min-w-0 bg-transparent pr-8 text-base text-foreground placeholder:text-muted focus:outline-none"
         />
-        {/* {!hasText && (
-          <button
-            type="button"
-            onClick={() => inputRef.current?.focus()}
-            title="Press S to search"
-            aria-label="Focus search (shortcut: S)"
-            className="absolute right-0 hidden cursor-pointer sm:inline-flex group-focus-within:hidden"
-          >
-            <Kbd className="border-accent/40 bg-accent/10 text-accent-ink shadow-sm transition-colors hover:border-accent hover:bg-accent/20">
-              S
-            </Kbd>
-          </button>
-        )} */}
       </div>
 
       {/* curriculum-level scope */}
@@ -138,13 +241,77 @@ export default function HeroSearch({
           strokeLinecap="round"
           strokeLinejoin="round"
           aria-hidden
-          className="size-[18px] shrink-0"
+          className="size-4.5 shrink-0"
         >
           <circle cx="11" cy="11" r="7" />
           <path d="m20 20-3.5-3.5" />
         </svg>
         <span className="sr-only sm:not-sr-only">Search</span>
       </button>
+
+      {showPanel && (
+        <div
+          ref={panelRef}
+          id={listboxId}
+          role="listbox"
+          aria-label="Instant search results"
+          className="animate-in fade-in-0 zoom-in-95 slide-in-from-top-2 absolute inset-x-0 top-[calc(100%+0.75rem)] z-50 origin-top overflow-hidden rounded-2xl border border-border/60 bg-white text-left shadow-2xl duration-150"
+        >
+          <ul className="max-h-88 divide-y divide-border/60 overflow-y-auto">
+            {results.map((result, index) => {
+              const meta = resultMeta(result);
+              const active = index === activeIndex;
+              return (
+                <li key={`${result.kind}-${index}`} role="presentation">
+                  <Link
+                    id={`${listboxId}-option-${index}`}
+                    role="option"
+                    aria-selected={active}
+                    href={resultHref(result)}
+                    onMouseEnter={() => setActiveIndex(index)}
+                    onClick={() => setSuggestOpen(false)}
+                    className={cn(
+                      "flex items-center gap-3 px-5 py-3 text-left transition-colors",
+                      active ? "bg-primary/5" : "hover:bg-surface-2"
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        "flex size-9 shrink-0 items-center justify-center rounded-full",
+                        active ? "bg-primary/15 text-primary" : "bg-surface-2 text-muted"
+                      )}
+                    >
+                      <Icon name={resultIcon(result)} className="size-4" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-sm font-medium text-foreground">
+                        {meta.title}
+                      </span>
+                      <span className="block truncate text-xs text-muted">
+                        {meta.chip} · {meta.detail}
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+
+          <button
+            type="button"
+            onClick={() => {
+              setSuggestOpen(false);
+              formRef.current?.requestSubmit();
+            }}
+            className="flex w-full items-center justify-between gap-2 border-t border-border/60 bg-surface-2/60 px-5 py-3 text-left text-sm font-medium text-primary transition-colors hover:bg-surface-2"
+          >
+            <span>
+              See all results for <span className="font-semibold">“{query.trim()}”</span>
+            </span>
+            <Icon name="arrow" className="size-4 shrink-0" />
+          </button>
+        </div>
+      )}
     </form>
   );
 }
