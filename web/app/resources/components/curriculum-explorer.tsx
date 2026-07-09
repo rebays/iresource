@@ -111,6 +111,8 @@ export function CurriculumExplorer({
           onFilterChange={handleFilterChange}
           onReset={() => setFilters(emptyFilters)}
           onShowMap={handleShowMap}
+          onBackToList={handleBackToList}
+          isMapOpen={viewMode === "map"}
         />
       )}
 
@@ -163,7 +165,7 @@ export function CurriculumExplorer({
           </div>
 
           {viewMode === "map" ? (
-            <div className="ml-auto flex flex-wrap items-center gap-3">
+            <div className="ml-auto flex flex-wrap items-center gap-3 lg:hidden">
               <Button variant="secondary" size="sm" onClick={handleBackToList}>
                 <Icon name="arrow" className="h-4 w-4 rotate-180" />
                 Back to resource list

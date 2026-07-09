@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import MobileNav from "./mobile-nav";
-import { SearchField } from "@/components/ui/search-field";
+import HeaderSearch from "./header-search";
 
 /**
  * Shared site header.
@@ -47,38 +47,16 @@ export default function SiteHeader({
             height={48}
             className="h-12 w-auto shrink-0"
           />
-          <span className="flex flex-col leading-tight">
-            <span
-              className={`text-base font-semibold ${
-                overlay ? "" : "text-foreground"
-              }`}
-            >
-              education.gov.sb
-            </span>
-            <span
-              className={`text-xs ${overlay ? "text-white/70" : "text-muted"}`}
-            >
-              MEHRD
-            </span>
+          <span
+            className={`text-xl font-bold ${
+              overlay ? "text-white" : "text-foreground"
+            }`}
+          >
+            MEHRD
           </span>
         </Link>
 
-        {!overlay && (
-          <form
-            action="/search"
-            role="search"
-            className="hidden max-w-md flex-1 md:block"
-          >
-            <label htmlFor="header-search" className="sr-only">
-              Search the resource hub
-            </label>
-            <SearchField
-              id="header-search"
-              name="q"
-              placeholder="Search documents, reports, videos…"
-            />
-          </form>
-        )}
+        {!overlay && <HeaderSearch />}
 
         <nav className="hidden items-center gap-7 text-base font-medium md:flex">
           {primaryNav.map((item) => (

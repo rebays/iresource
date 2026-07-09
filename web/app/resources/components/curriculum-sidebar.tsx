@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import type { Grade, ResourceType, Subject } from "../../lib/curriculum";
 
 function FilterSelect<T extends string>({
@@ -62,6 +63,8 @@ export function CurriculumSidebar({
   onFilterChange,
   onReset,
   onShowMap,
+  onBackToList,
+  isMapOpen = false,
 }: {
   resourceTypes: ResourceType[];
   subjects: Subject[];
@@ -70,11 +73,14 @@ export function CurriculumSidebar({
   onFilterChange: (patch: Partial<CurriculumFilters>) => void;
   onReset: () => void;
   onShowMap: () => void;
+  onBackToList: () => void;
+  /** Coverage Map is currently shown — swaps the button into a "back" toggle. */
+  isMapOpen?: boolean;
 }) {
   const hasActiveFilters = filters.type || filters.subjectId || filters.gradeId || filters.query;
 
   return (
-    <aside className="hidden w-full shrink-0 flex-col gap-5 lg:flex lg:w-64">
+    <aside className="hidden w-full shrink-0 flex-col gap-5 lg:sticky lg:top-24 lg:flex lg:w-64 lg:max-h-[calc(100vh-7rem)] lg:self-start lg:overflow-y-auto">
       <div className="flex items-center justify-between">
         <h2 className="text-sm font-semibold uppercase tracking-[0.14em] text-foreground/70">
           Filters
@@ -141,9 +147,16 @@ export function CurriculumSidebar({
         optionLabel={(id) => grades.find((g) => g.id === id)?.label ?? id}
       />
 
-      <Button variant="secondary" className="w-full" onClick={onShowMap}>
-        <Icon name="grid" className="h-4 w-4" />
-        Coverage Map
+      <Button
+        variant="secondary"
+        className="w-full"
+        onClick={isMapOpen ? onBackToList : onShowMap}
+      >
+        <Icon
+          name={isMapOpen ? "arrow" : "grid"}
+          className={cn("h-4 w-4", isMapOpen && "rotate-180")}
+        />
+        {isMapOpen ? "Back to resource list" : "Coverage Map"}
       </Button>
     </aside>
   );

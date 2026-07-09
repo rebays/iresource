@@ -1,6 +1,9 @@
 "use client";
 
+import { useRef, useState } from "react";
 import { categories } from "../lib/content";
+import { useSearchShortcut } from "../hooks/use-search-shortcut";
+import { Kbd } from "@/components/ui/kbd";
 import {
   Select,
   SelectContent,
@@ -28,21 +31,34 @@ export default function HeroSearch({
   /** Id for the curriculum-level select — override when rendering more than one instance per page. */
   id?: string;
 }) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [hasText, setHasText] = useState(Boolean(defaultQuery));
+  useSearchShortcut(inputRef);
+
   return (
     <form
       action="/search"
       role="search"
       className={`group flex h-14 w-full items-center rounded-full border border-white/20 bg-white/95 pl-6 pr-1.5 focus-within:ring-2 focus-within:ring-accent ${className}`}
     >
-      <input
-        key={defaultQuery}
-        type="search"
-        name="q"
-        defaultValue={defaultQuery}
-        placeholder="Search documents, reports, videos…"
-        aria-label="Search the resource hub"
-        className="h-full min-w-0 flex-1 bg-transparent text-base text-foreground placeholder:text-muted focus:outline-none"
-      />
+      <div className="relative flex min-w-0 flex-1 items-center">
+        <input
+          key={defaultQuery}
+          ref={inputRef}
+          type="search"
+          name="q"
+          defaultValue={defaultQuery}
+          placeholder="Search documents, reports, videos…"
+          aria-label="Search the resource hub"
+          onChange={(e) => setHasText(e.target.value.length > 0)}
+          className="h-full w-full min-w-0 bg-transparent pr-8 text-base text-foreground placeholder:text-muted focus:outline-none"
+        />
+        {!hasText && (
+          <Kbd className="absolute right-0 border-border/60 bg-background/60 text-muted group-focus-within:hidden">
+            F
+          </Kbd>
+        )}
+      </div>
 
       {/* curriculum-level scope */}
       <div className="hidden h-8 items-center border-l border-border pl-2 sm:flex">

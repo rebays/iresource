@@ -63,8 +63,8 @@ export default async function ResourceIndexPage({
 
       <PageHeader
         id="wm-resources"
-        title="Digital Curriculum, one map to master your learning path."
-        lead="See what's published against each subject and grade level at a glance, then drill into the resources behind any cell."
+        title="Digital Curriculum Hub."
+        lead="Instantly access, organize, and deploy vetted instructional materials across all subjects and grades. Drill down into every resource with a single click."
         crumbs={[{ label: "Resources" }]}
       />
 
