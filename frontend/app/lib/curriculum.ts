@@ -140,7 +140,7 @@ const curated: CurriculumResource[] = [
     size: "4.1 MB",
     updated: "10 Mar 2026",
     libraryRef: { category: "primary", slug: "numeracy-workbook-y3" },
-    previewUrl: "https://documents.iresource.gov.sb/embed/numeracy-workbook-y3.pdf",
+    previewUrl: "https://documents.education.gov.sb/embed/numeracy-workbook-y3.pdf",
   },
   ...["y4", "y5", "y6"].map((gradeId) => ({
     id: `science-kit-manual-${gradeId}`,
@@ -166,7 +166,7 @@ const curated: CurriculumResource[] = [
     format: "PPTX",
     size: "3.0 MB",
     updated: "6 May 2026",
-    previewUrl: "https://documents.iresource.gov.sb/embed/numeracy-warmups-y2/slides",
+    previewUrl: "https://documents.education.gov.sb/embed/numeracy-warmups-y2/slides",
   },
 ];
 

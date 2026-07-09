@@ -30,7 +30,7 @@ export default function NewsBanner() {
   return (
     <div className="mx-auto w-full max-w-8xl px-6 py-24">
       <h2 className="font-serif text-4xl leading-tight tracking-tight text-foreground sm:text-5xl">
-        Latest from iResource.
+        Latest from the Ministry.
       </h2>
 
       <div className="mt-10 grid gap-10 lg:grid-cols-3">

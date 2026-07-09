@@ -48,11 +48,11 @@ export default function SiteHeader({
           />
           <span className="flex flex-col leading-tight">
             <span
-              className={`text-sm font-semibold ${
+              className={`text-base font-semibold ${
                 overlay ? "" : "text-foreground"
               }`}
             >
-              iResource
+              education.gov.sb
             </span>
             <span
               className={`text-xs ${overlay ? "text-white/70" : "text-muted"}`}

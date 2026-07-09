@@ -1,34 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const partners = [
-  "Australian Government",
-  "UNICEF",
-];
-
 export default function SiteFooter() {
   return (
     <footer className="bg-[#081432] text-white">
-      {/* development partners */}
       <div>
-        <div className="mx-auto w-full max-w-8xl px-6 py-20 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/50">
-            Development partners
-          </p>
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-x-12 gap-y-5">
-            {partners.map((name) => (
-              <span
-                key={name}
-                className="font-serif text-lg text-white/40 transition-colors hover:text-white/70"
-              >
-                {name}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="border-t border-white/10">
         <div className="mx-auto flex w-full max-w-8xl flex-col gap-12 px-6 pb-32 pt-36 lg:flex-row lg:items-start lg:justify-between lg:gap-24">
           <div className="lg:max-w-md">
           <div className="flex items-center gap-4">
@@ -40,7 +16,7 @@ export default function SiteFooter() {
               className="h-14 w-auto shrink-0"
             />
             <span className="flex flex-col leading-tight">
-              <span className="font-serif text-3xl text-white">iResource</span>
+              <span className="font-serif text-3xl text-white">education.gov.sb</span>
               <span className="mt-1 text-sm text-white/60">
                 Ministry of Education &amp; Human Resources Development
               </span>

@@ -175,7 +175,7 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10_000
 
 # Wagtail settings
 
-WAGTAIL_SITE_NAME = "iresource"
+WAGTAIL_SITE_NAME = "education.gov.sb"
 
 # Grapple / GraphQL
 GRAPHENE = {

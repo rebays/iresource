@@ -191,7 +191,7 @@ export default function SystemShowcase({ config }: { config: ShowcaseConfig }) {
               className="h-12 w-auto shrink-0"
             />
             <span className="flex flex-col leading-tight">
-              <span className="text-sm font-semibold text-foreground">iResource</span>
+              <span className="text-base font-semibold text-foreground">education.gov.sb</span>
               <span className="text-xs text-muted">Design System</span>
             </span>
           </Link>
@@ -677,7 +677,7 @@ export default function SystemShowcase({ config }: { config: ShowcaseConfig }) {
                 <div className="flex items-center gap-3">
                   <Image src="/coat-of-arms.png" alt="" width={48} height={48} className="h-12 w-auto shrink-0" />
                   <span className="flex flex-col leading-tight">
-                    <span className="text-sm font-semibold text-foreground">iResource</span>
+                    <span className="text-base font-semibold text-foreground">education.gov.sb</span>
                     <span className="text-xs text-muted">MEHRD</span>
                   </span>
                 </div>
@@ -704,7 +704,7 @@ export default function SystemShowcase({ config }: { config: ShowcaseConfig }) {
                 <div className="flex items-center gap-3">
                   <Image src="/coat-of-arms.png" alt="" width={48} height={48} className="h-12 w-auto shrink-0" />
                   <span className="flex flex-col leading-tight">
-                    <span className="text-sm font-semibold">iResource</span>
+                    <span className="text-base font-semibold">education.gov.sb</span>
                     <span className="text-xs text-white/70">MEHRD</span>
                   </span>
                 </div>
@@ -1228,7 +1228,7 @@ export default function SystemShowcase({ config }: { config: ShowcaseConfig }) {
       {/* ---------- Footer ---------- */}
       <footer className="border-t border-border bg-deep text-white">
         <div className="mx-auto flex w-full max-w-8xl flex-col gap-2 px-6 py-10">
-          <p className="font-serif text-lg">iResource Design System</p>
+          <p className="font-serif text-lg">education.gov.sb Design System</p>
           <p className="text-sm text-white/60">
             Ministry of Education &amp; Human Resources Development, Solomon Islands Government.
           </p>

@@ -11,13 +11,13 @@ import { TopicSelect } from "../components/topic-select";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "iResource is the official digital learning portal of the Solomon Islands — built by MEHRD with UNICEF Pacific support.",
+    "education.gov.sb is the official digital learning portal of the Solomon Islands — built by MEHRD with UNICEF Pacific support.",
 };
 
 const topics = [
   ["general", "General enquiry"],
   ["resource", "A document or resource"],
-  ["contribute", "Contributing to iResource"],
+  ["contribute", "Contributing to education.gov.sb"],
   ["hub", "Problem with the platform"],
 ] as const;
 
@@ -72,8 +72,8 @@ export default function AboutPage() {
 
       <PageHeader
         id="wm-about"
-        title="About iResource."
-        lead="iResource is the official digital learning portal of the Solomon Islands — built by MEHRD with UNICEF Pacific support."
+        title="About education.gov.sb."
+        lead="education.gov.sb is the official digital learning portal of the Solomon Islands — built by MEHRD with UNICEF Pacific support."
         crumbs={[{ label: "About" }]}
       />
 
@@ -88,7 +88,7 @@ export default function AboutPage() {
                   A national portal, built for every learner.
                 </h2>
                 <p className="mt-5 text-base leading-7 text-muted">
-                  iResource is the official digital learning portal of the
+                  education.gov.sb is the official digital learning portal of the
                   Solomon Islands, built to ensure every student has access to
                   high-quality, curriculum-aligned educational materials,
                   regardless of their location or internet connectivity.
@@ -143,7 +143,7 @@ export default function AboutPage() {
               </h2>
               <p className="mt-4 max-w-md text-base leading-7 text-muted">
                 Have questions about the platform? Our support team is here to
-                help you get the most out of iResource.
+                help you get the most out of education.gov.sb.
               </p>
               <ul className="mt-8 space-y-4">
                 <li className="flex gap-4 rounded-2xl border border-border bg-background p-5">
@@ -158,10 +158,10 @@ export default function AboutPage() {
                       Email
                     </p>
                     <a
-                      href="mailto:support@iresource.gov.sb"
+                      href="mailto:support@education.gov.sb"
                       className="mt-1 block text-sm font-medium text-foreground hover:text-primary"
                     >
-                      support@iresource.gov.sb
+                      support@education.gov.sb
                     </a>
                   </div>
                 </li>
