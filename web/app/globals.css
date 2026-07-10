@@ -239,6 +239,43 @@ body {
   font-family: var(--font-body-role), Arial, Helvetica, sans-serif;
 }
 
+/* ================================================================== */
+/*  Page transitions — native View Transitions API, driven by React's  */
+/*  <ViewTransition enter="page-morph-in" exit="page-morph-out"> in    */
+/*  app/layout.tsx. A soft scale + blur crossfade between routes.      */
+/* ================================================================== */
+
+::view-transition-old(.page-morph-out) {
+  animation: 200ms cubic-bezier(0.4, 0, 1, 1) both page-morph-out;
+}
+::view-transition-new(.page-morph-in) {
+  animation: 280ms cubic-bezier(0, 0, 0.2, 1) 60ms both page-morph-in;
+}
+
+@keyframes page-morph-out {
+  to {
+    opacity: 0;
+    transform: scale(1.015);
+    filter: blur(6px);
+  }
+}
+@keyframes page-morph-in {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+    filter: blur(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
