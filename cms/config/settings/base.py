@@ -201,13 +201,21 @@ WAGTAILSEARCH_BACKENDS = {
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 WAGTAILADMIN_BASE_URL = "http://example.com"
 
-# Allowed file extensions for documents in the document library, also enforced
-# by the resource library's upload form.
+# Allowed file extensions for documents in the (hidden) built-in document library.
 # This can be omitted to allow all files, but note that this may present a security risk
 # if untrusted users are allowed to upload files -
 # see https://docs.wagtail.org/en/stable/advanced_topics/deploying.html#user-uploaded-files
 WAGTAILDOCS_EXTENSIONS = ['csv', 'docx', 'key', 'odt', 'pdf', 'pptx', 'rtf', 'txt', 'xlsx', 'zip']
 
-# Maximum upload size for documents in bytes, also enforced by the resource
-# library's upload form.
+# Maximum upload size for documents in bytes.
 WAGTAILDOCS_MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10MB
+
+# Resource library uploads. Video extensions (see resources.models.VIDEO_EXTENSIONS)
+# get the larger video limit; everything else uses the document limit. Note that
+# the production proxy/host must also accept request bodies of the video size.
+RESOURCE_LIBRARY_EXTENSIONS = [
+    'csv', 'docx', 'key', 'odt', 'pdf', 'pptx', 'rtf', 'txt', 'xlsx', 'zip',
+    'mp4', 'webm', 'm4v',
+]
+RESOURCE_LIBRARY_MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10MB
+RESOURCE_LIBRARY_VIDEO_MAX_UPLOAD_SIZE = 200 * 1024 * 1024  # 200MB

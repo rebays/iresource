@@ -10,6 +10,15 @@ from wagtail.search import index
 
 LIBRARY_ROOT_NAME = "Resource Library"
 
+# Extensions treated as video: they get the larger upload limit, a video icon
+# in the explorer, and should be rendered as a player on the frontend.
+# Browser-playable formats only.
+VIDEO_EXTENSIONS = ["mp4", "webm", "m4v"]
+
+
+def is_video_filename(filename):
+    return os.path.splitext(filename)[1][1:].lower() in VIDEO_EXTENSIONS
+
 
 class ResourceFolder(MP_Node):
     """
@@ -109,6 +118,10 @@ class Resource(index.Indexed, models.Model):
     @property
     def file_extension(self):
         return os.path.splitext(self.filename)[1][1:]
+
+    @property
+    def is_video(self):
+        return is_video_filename(self.file.name)
 
     def set_file_metadata(self):
         """Populate file_size and file_hash from the current file."""

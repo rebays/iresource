@@ -234,7 +234,7 @@
                             <a class="rl-card" href="{{ doc.url }}" title="Download">
                         {% endif %}
                             <span class="rl-card__thumb">
-                                {% icon name="doc-full" %}
+                                {% if doc.is_video %}{% icon name="media" %}{% else %}{% icon name="doc-full" %}{% endif %}
                                 {% if doc.file_extension %}<span class="rl-card__ext">{{ doc.file_extension|upper }}</span>{% endif %}
                             </span>
                             <span class="rl-card__title">{{ doc.title }}</span>
@@ -278,7 +278,7 @@
                             <tr>
                                 <td class="title">
                                     <div class="title-wrapper">
-                                        {% icon name="doc-full" classname="initial" %}
+                                        {% if doc.is_video %}{% icon name="media" classname="initial" %}{% else %}{% icon name="doc-full" classname="initial" %}{% endif %}
                                         {% if can_edit_documents %}
                                             <a href="{% url 'resource_library:edit_resource' doc.pk %}" title="Edit this resource">{{ doc.title }}</a>
                                         {% else %}

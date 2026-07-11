@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
 from .models import LIBRARY_ROOT_NAME, Resource, ResourceFolder
@@ -127,6 +127,80 @@ class ResourceLibraryTests(TestCase):
         )
         self.assertEqual(response.status_code, 200)  # re-rendered with errors
         self.assertContains(response, "extension")
+        self.assertEqual(Resource.objects.count(), 0)
+
+    def test_upload_video(self):
+        root = ResourceFolder.get_library_root()
+        folder = root.add_child(instance=ResourceFolder(name="Videos"))
+
+        response = self.client.post(
+            reverse("resource_library:upload", args=[folder.pk]),
+            {
+                "files": SimpleUploadedFile("Numeracy training.mp4", b"video bytes"),
+                "resource_type": "other",
+            },
+        )
+        self.assertRedirects(
+            response, reverse("resource_library:folder", args=[folder.pk])
+        )
+        resource = Resource.objects.get()
+        self.assertEqual(resource.title, "Numeracy training")
+        self.assertTrue(resource.is_video)
+
+        # Grid card shows the media icon instead of the document icon
+        response = self.client.get(
+            reverse("resource_library:folder", args=[folder.pk])
+        )
+        self.assertContains(response, "#icon-media")
+
+    @override_settings(
+        RESOURCE_LIBRARY_MAX_UPLOAD_SIZE=5,
+        RESOURCE_LIBRARY_VIDEO_MAX_UPLOAD_SIZE=1000,
+    )
+    def test_size_limits_are_per_kind(self):
+        root = ResourceFolder.get_library_root()
+        folder = root.add_child(instance=ResourceFolder(name="PDS"))
+        upload_url = reverse("resource_library:upload", args=[folder.pk])
+
+        # A document over the document limit is rejected…
+        response = self.client.post(
+            upload_url,
+            {
+                "files": SimpleUploadedFile("big.txt", b"x" * 100),
+                "resource_type": "pds",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "too big")
+        self.assertEqual(Resource.objects.count(), 0)
+
+        # …while a video of the same size fits under the video limit
+        response = self.client.post(
+            upload_url,
+            {
+                "files": SimpleUploadedFile("big.mp4", b"x" * 100),
+                "resource_type": "other",
+            },
+        )
+        self.assertRedirects(
+            response, reverse("resource_library:folder", args=[folder.pk])
+        )
+        self.assertEqual(Resource.objects.count(), 1)
+
+    @override_settings(RESOURCE_LIBRARY_VIDEO_MAX_UPLOAD_SIZE=50)
+    def test_oversized_video_rejected(self):
+        root = ResourceFolder.get_library_root()
+        folder = root.add_child(instance=ResourceFolder(name="Videos"))
+
+        response = self.client.post(
+            reverse("resource_library:upload", args=[folder.pk]),
+            {
+                "files": SimpleUploadedFile("huge.mp4", b"x" * 100),
+                "resource_type": "other",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "too big")
         self.assertEqual(Resource.objects.count(), 0)
 
     def test_layout_defaults_to_grid_and_toggle_persists(self):
