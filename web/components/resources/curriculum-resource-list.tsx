@@ -1,21 +1,9 @@
 import { ResourceCard, type ResourceCardProps } from "@/components/ui/resource-card";
 import type { CurriculumResource, Grade, Subject } from "@/app/lib/curriculum";
 
-const textBookImages = [
-  "/text_book_agri_y8.png",
-  "/text_book_christian_ed_y7.png",
-  "/text_book_teachers_guide_y9.png",
-  "/text_book_tech_teachers_guide_y9.png",
-  "/text_book_y6.png",
-];
-
-/** Deterministic pseudo-random pick so a resource's cover stays put across re-renders. */
-function textBookImageFor(id: string): string {
-  let hash = 0;
-  for (let i = 0; i < id.length; i++) {
-    hash = (hash * 31 + id.charCodeAt(i)) | 0;
-  }
-  return textBookImages[Math.abs(hash) % textBookImages.length];
+/** Deterministic cover sourced from picsum.photos so a resource's image stays put across re-renders. */
+function coverImageFor(id: string): string {
+  return `https://picsum.photos/seed/${encodeURIComponent(id)}/800/450`;
 }
 
 function toCardProps(
@@ -42,7 +30,7 @@ function toCardProps(
   const isAssessment = resource.type === "Assessment";
   return {
     variant: isAssessment ? "report" : "document",
-    image: textBookImageFor(resource.id),
+    image: coverImageFor(resource.id),
     title: resource.title,
     description: resource.summary,
     meta: `${gradeLabel} · Updated ${resource.updated} · ${resource.format} · ${resource.size}`,

@@ -97,7 +97,10 @@ function ExpandButton({ onClick }: { onClick: () => void }) {
  * whole viewport.
  */
 export function ResourcePreviewer({ resource }: { resource: CurriculumResource }) {
-  const kind = getPreviewKind(resource.format);
+  // Every resource has a mock previewUrl (see `mockPreviewUrlFor` in curriculum.ts) — it
+  // always wins over the type-derived kind so every resource, video or not, shows its
+  // document inline. Only resources without one fall back to the format-derived kind.
+  const kind = resource.previewUrl ? "pdf" : getPreviewKind(resource.format);
   const [stage, setStage] = useState<Stage>("loading");
   const [fullscreen, setFullscreen] = useState(false);
 

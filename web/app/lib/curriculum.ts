@@ -97,9 +97,30 @@ export type CurriculumResource = {
   updated: string;
   /** Set when this mirrors a real item in the general resource library. */
   libraryRef?: { category: CategorySlug; slug: string };
-  /** Embed URL for the previewer, when the format supports one (PDF/slide deck). */
+  /** Embed URL for the previewer. `curriculumResources` guarantees every entry has one (see `mockPreviewUrlFor`). */
   previewUrl?: string;
 };
+
+/**
+ * Mock documents (public/preview) used as every resource's inline preview —
+ * there's no real file store yet, so every resource, regardless of its own
+ * format/type, previews one of these real PDFs. Assigned deterministically
+ * per resource id so a given resource always lands on the same file.
+ */
+const mockPreviewFiles = [
+  "Technology_Year 8_TG_Chapter 01.pdf",
+  "Technology_Year 8_TG_Chapter 02.pdf",
+  "Technology_Year 8_TG_Chapter 03.pdf",
+  "Technology_Year 8_TG_Chapter 04.pdf",
+  "Technology_Year 8_TG_Chapter 05.pdf",
+  "Technology_Year 8_TG_Chapter 06.pdf",
+];
+
+function mockPreviewUrlFor(id: string): string {
+  let h = 0;
+  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+  return `/preview/${encodeURIComponent(mockPreviewFiles[h % mockPreviewFiles.length])}`;
+}
 
 /* ---- Hand-curated items, cross-referencing the real "learning" resources ---- */
 
@@ -171,6 +192,35 @@ const curated: CurriculumResource[] = [
     updated: "6 May 2026",
     previewUrl: "https://documents.education.gov.sb/embed/numeracy-warmups-y2/slides",
   },
+  /**
+   * Real PDF files under public/preview, used so the resource previewer has
+   * at least one document per chapter that actually renders inline instead
+   * of falling back. Title is the filename (extension dropped).
+   */
+  ...([
+    { file: "Technology_Year 8_TG_Chapter 01.pdf", size: "10.0 MB", updated: "14 Jan 2026" },
+    { file: "Technology_Year 8_TG_Chapter 02.pdf", size: "5.9 MB", updated: "14 Jan 2026" },
+    { file: "Technology_Year 8_TG_Chapter 03.pdf", size: "7.7 MB", updated: "14 Jan 2026" },
+    { file: "Technology_Year 8_TG_Chapter 04.pdf", size: "10.1 MB", updated: "14 Jan 2026" },
+    { file: "Technology_Year 8_TG_Chapter 05.pdf", size: "8.9 MB", updated: "14 Jan 2026" },
+    { file: "Technology_Year 8_TG_Chapter 06.pdf", size: "8.5 MB", updated: "14 Jan 2026" },
+  ] as const).map(({ file, size, updated }, i) => {
+    const title = file.replace(/\.pdf$/i, "");
+    const chapter = title.match(/Chapter (\d+)/)?.[1] ?? String(i + 1);
+    return {
+      id: `tech-y8-tg-ch${chapter}`,
+      title,
+      subjectId: "design-technology",
+      gradeId: "f2",
+      level: "secondary" as const,
+      type: "Teacher Guide" as const,
+      summary: `Teacher's guide chapter ${Number(chapter)} for the Year 8 Design & Technology syllabus.`,
+      format: "PDF",
+      size,
+      updated,
+      previewUrl: `/preview/${encodeURIComponent(file)}`,
+    };
+  }),
 ];
 
 /* ---- Deterministic filler, so every subject has some coverage ---- */
@@ -229,7 +279,12 @@ function generatedFiller(): CurriculumResource[] {
   return items;
 }
 
-export const curriculumResources: CurriculumResource[] = [...curated, ...generatedFiller()];
+export const curriculumResources: CurriculumResource[] = [...curated, ...generatedFiller()].map(
+  (r) => ({
+    ...r,
+    previewUrl: r.previewUrl?.startsWith("/preview/") ? r.previewUrl : mockPreviewUrlFor(r.id),
+  })
+);
 
 export function getCurriculumResourceById(id: string): CurriculumResource | undefined {
   return curriculumResources.find((r) => r.id === id);

@@ -51,18 +51,18 @@ const filterInstructionSteps: { icon: IconName; title: string; description: stri
 
 function FilterInstructions() {
   return (
-    <div className="animate-in fade-in-0 zoom-in-95 rounded-2xl border border-dashed border-border bg-surface p-12 text-center duration-300">
-      <Icon name="filter" className="mx-auto h-8 w-8 text-muted" />
-      <h2 className="mt-4 font-serif text-xl text-foreground">Find the resources you need</h2>
-      <p className="mx-auto mt-2 max-w-md text-[15px] text-muted">
+    <div className="animate-in fade-in-0 zoom-in-95 flex min-h-128 flex-col justify-center rounded-2xl border border-dashed border-border bg-surface p-16 text-center duration-300">
+      <Icon name="filter" className="mx-auto h-10 w-10 text-muted" />
+      <h2 className="mt-6 font-serif text-2xl text-foreground">Find the resources you need</h2>
+      <p className="mx-auto mt-3 max-w-md text-[15px] text-muted">
         Use the filters to search by keyword, or narrow by resource type, subject, and grade level.
         Matching resources will appear here as soon as you apply a filter.
       </p>
-      <dl className="mx-auto mt-8 grid max-w-2xl gap-4 text-left sm:grid-cols-2">
+      <dl className="mx-auto mt-10 grid max-w-2xl gap-4 text-left sm:grid-cols-2">
         {filterInstructionSteps.map((step) => (
           <div
             key={step.title}
-            className="flex items-start gap-3 rounded-xl border border-border bg-background p-4"
+            className="flex items-start gap-3 rounded-xl border border-border bg-background p-5"
           >
             <Icon name={step.icon} className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
             <div>
