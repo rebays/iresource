@@ -20,16 +20,20 @@ function getPreviewKind(format: string): PreviewKind {
 function Frame({
   children,
   dark,
+  document,
   className,
 }: {
   children: React.ReactNode;
   dark?: boolean;
+  /** Documents/slides are portrait pages, not a landscape video thumbnail — use a taller ratio that fits a page. */
+  document?: boolean;
   className?: string;
 }) {
   return (
     <div
       className={cn(
-        "relative aspect-4/3 w-full overflow-hidden rounded-2xl border border-border sm:aspect-video",
+        "relative w-full overflow-hidden rounded-2xl border border-border",
+        document ? "aspect-[3/4] sm:aspect-[4/5]" : "aspect-4/3 sm:aspect-video",
         dark ? "bg-deep" : "bg-surface",
         className
       )}
@@ -172,7 +176,7 @@ export function ResourcePreviewer({ resource }: { resource: CurriculumResource }
 
   return (
     <>
-      <Frame dark={dark}>
+      <Frame dark={dark} document={kind === "pdf" || kind === "slides"}>
         {body}
         <ExpandButton onClick={() => setFullscreen(true)} />
       </Frame>
