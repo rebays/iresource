@@ -190,7 +190,7 @@ export default function NewsFrontPage() {
       {/* headline list — everything older */}
       {headlines.length > 0 && (
         <section aria-label="More news" className="mt-14">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-ink">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
             More news
           </p>
           <HeadlineList posts={shownHeadlines} />

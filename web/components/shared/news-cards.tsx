@@ -100,7 +100,7 @@ export function BriefsColumn({
 }) {
   return (
     <aside aria-label="News in brief" className={className}>
-      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-ink">
+      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
         In brief
       </p>
       <ul className="mt-2 divide-y divide-border">

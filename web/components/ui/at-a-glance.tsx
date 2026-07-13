@@ -21,7 +21,7 @@ function AtAGlance({
         className
       )}
     >
-      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-ink">
+      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
         {title}
       </p>
       <ul className="mt-4 space-y-2.5">
