@@ -55,7 +55,7 @@ export default function Home() {
         <div className="relative flex flex-1 items-center">
           <div className="mx-auto w-full max-w-6xl px-6 pb-36 pt-12 text-center">
             <h1 className="font-serif text-5xl leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl">
-              Resource Hub
+              Education Resource Hub
             </h1>
             <p className="mt-2 text-lg leading-8 text-white/80 sm:text-xl">
               Building a brighter future through learning.

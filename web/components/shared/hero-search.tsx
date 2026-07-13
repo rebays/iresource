@@ -150,7 +150,7 @@ export default function HeroSearch({
           name="q"
           value={query}
           placeholder="Search documents, reports, videos…"
-          aria-label="Search the resource hub"
+          aria-label="Search the Education Resource Hub"
           role="combobox"
           aria-expanded={showPanel}
           aria-controls={listboxId}

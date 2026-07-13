@@ -63,7 +63,7 @@ export default function MobileNav({
         <div className="px-6 pb-2 pt-20">
           <form action="/search" role="search" onSubmit={() => setOpen(false)}>
             <label htmlFor="mobile-nav-search" className="sr-only">
-              Search the resource hub
+              Search the Education Resource Hub
             </label>
             <div className="relative">
               <Icon

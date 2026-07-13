@@ -20,7 +20,7 @@ export default function HeaderSearch() {
       className="hidden max-w-md flex-1 md:block"
     >
       <label htmlFor="header-search" className="sr-only">
-        Search the resource hub
+        Search the Education Resource Hub
       </label>
       <SearchField
         ref={inputRef}

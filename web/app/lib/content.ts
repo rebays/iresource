@@ -1,5 +1,5 @@
 /**
- * Central mock content for the Resource Hub templates.
+ * Central mock content for the Education Resource Hub templates.
  *
  * Everything the page templates render comes from here, so wiring the site
  * to the Wagtail API later means replacing these arrays/helpers with fetch

@@ -80,7 +80,7 @@ export default function ContactPage() {
               Reach the Ministry.
             </h2>
             <p className="mt-3 max-w-md text-base leading-7 text-muted">
-              The Resource Hub is maintained by the Ministry&apos;s Media &amp;
+              The Education Resource Hub is maintained by the Ministry&apos;s Media &amp;
               Communications Unit. For matters handled in the provinces,
               contact your provincial education authority first.
             </p>

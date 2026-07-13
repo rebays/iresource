@@ -693,7 +693,7 @@ export default function SystemShowcase({ config }: { config: ShowcaseConfig }) {
             <SearchField
               className="max-w-md"
               placeholder="Search documents, reports, videos…"
-              aria-label="Search the resource hub"
+              aria-label="Search the Education Resource Hub"
             />
           </div>
         </div>
