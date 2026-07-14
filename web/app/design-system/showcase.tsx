@@ -30,7 +30,7 @@ import { Button } from "@/components/ui/button";
 import { Icon, icons } from "@/components/ui/icon";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ResourceCard } from "@/components/ui/resource-card";
+import { ResourceCard, type ResourceCardBadge } from "@/components/ui/resource-card";
 import {
   Select,
   SelectContent,
@@ -128,6 +128,66 @@ const accordionItems: MediaAccordionItem[] = [
     description:
       "Manage teacher registration, professional development, and payroll enquiries.",
     image: "/svc-teachers.jpg",
+  },
+];
+
+/* sample science-syllabus textbooks for the library-shelf card variant —
+   Dewey-flavoured call numbers, one per science strand */
+const scienceTextbooks: {
+  title: string;
+  author: string;
+  callNumber: string;
+  meta: string;
+  image: string;
+  badges: ResourceCardBadge[];
+}[] = [
+  {
+    title: "Physics for Solomon Islands — Form 4",
+    author: "Curriculum Development Division",
+    callNumber: "530.076 PHY",
+    meta: "Form 4 · 3rd Edition · PDF · 14.2 MB",
+    image: "https://picsum.photos/seed/textbook-physics-f4/600/900",
+    badges: [{ label: "Science", tone: "primary" }, { label: "Textbook", tone: "accent" }],
+  },
+  {
+    title: "Chemistry for Solomon Islands — Form 5",
+    author: "Curriculum Development Division",
+    callNumber: "540.076 CHE",
+    meta: "Form 5 · 2nd Edition · PDF · 16.8 MB",
+    image: "https://picsum.photos/seed/textbook-chemistry-f5/600/900",
+    badges: [{ label: "Science", tone: "primary" }, { label: "Textbook", tone: "accent" }],
+  },
+  {
+    title: "Biology for Solomon Islands — Form 3",
+    author: "Curriculum Development Division",
+    callNumber: "570.076 BIO",
+    meta: "Form 3 · 2nd Edition · PDF · 12.5 MB",
+    image: "https://picsum.photos/seed/textbook-biology-f3/600/900",
+    badges: [{ label: "Science", tone: "primary" }, { label: "Textbook", tone: "accent" }],
+  },
+  {
+    title: "Earth & Environmental Science — Form 6",
+    author: "Curriculum Development Division",
+    callNumber: "550.076 EAR",
+    meta: "Form 6 · 1st Edition · PDF · 11.3 MB",
+    image: "https://picsum.photos/seed/textbook-earth-f6/600/900",
+    badges: [{ label: "Science", tone: "primary" }, { label: "Textbook", tone: "accent" }],
+  },
+  {
+    title: "Integrated Science — Form 1",
+    author: "Curriculum Development Division",
+    callNumber: "500.076 SCI",
+    meta: "Form 1 · 4th Edition · PDF · 9.6 MB",
+    image: "https://picsum.photos/seed/textbook-integrated-f1/600/900",
+    badges: [{ label: "Science", tone: "primary" }, { label: "Textbook", tone: "accent" }],
+  },
+  {
+    title: "Primary Science — Year 6",
+    author: "Curriculum Development Division",
+    callNumber: "500.076 PRI",
+    meta: "Year 6 · 3rd Edition · PDF · 8.1 MB",
+    image: "https://picsum.photos/seed/textbook-primary-science-y6/600/900",
+    badges: [{ label: "Science", tone: "primary" }, { label: "Textbook", tone: "accent" }],
   },
 ];
 
@@ -877,6 +937,33 @@ export default function SystemShowcase({ config }: { config: ShowcaseConfig }) {
               description="A recorded session for teachers rolling out the updated Standard 1–3 materials."
               meta="Recorded 05 May 2026 · 12 min"
             />
+          </div>
+        </div>
+
+        <div className="mt-12">
+          <SubHead>Library shelf — textbook cards</SubHead>
+          <p className="mb-5 max-w-2xl text-[15px] leading-relaxed text-muted">
+            The <code>textbook</code> variant (<code>ResourceCard</code>), for
+            PDFs that carry their own cover art: a portrait spine with a
+            fore-edge and ribbon marker, and a catalog-style call number in
+            place of the usual description. Sampled here across the science
+            syllabus.
+          </p>
+          <div className="grid gap-x-6 gap-y-10 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
+            {scienceTextbooks.map((book) => (
+              <ResourceCard
+                key={book.callNumber}
+                variant="textbook"
+                image={book.image}
+                author={book.author}
+                callNumber={book.callNumber}
+                href="#"
+                title={book.title}
+                description=""
+                meta={book.meta}
+                badges={book.badges}
+              />
+            ))}
           </div>
         </div>
 

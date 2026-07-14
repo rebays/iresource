@@ -244,7 +244,6 @@ export function CurriculumExplorer({
             <CurriculumResourceList
               key={`${level}-${filters.type ?? ""}-${filters.subjectId ?? ""}-${filters.gradeId ?? ""}-${filters.query}`}
               resources={filteredResources}
-              subjects={subjects}
               grades={grades}
             />
           ) : (

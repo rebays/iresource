@@ -46,7 +46,6 @@ export default async function CurriculumResourcePage({
     level: resource.level,
     subjectId: resource.subjectId,
   }).filter((r) => r.id !== resource.id);
-  const relatedSubjects = getSubjects(resource.level);
   const relatedGrades = getGrades(resource.level);
 
   const facts: [string, string][] = [
@@ -109,7 +108,6 @@ export default async function CurriculumResourcePage({
               <div className="mt-8">
                 <CurriculumResourceList
                   resources={related.slice(0, 3)}
-                  subjects={relatedSubjects}
                   grades={relatedGrades}
                 />
               </div>
