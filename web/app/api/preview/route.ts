@@ -1,26 +1,10 @@
 import { NextResponse } from 'next/server';
 import { draftMode } from 'next/headers';
 import { cmsFetch } from '@/lib/cms';
+import { GET_PAGE_META_BY_TOKEN } from '@/lib/queries';
+import type { Page } from '@/components/pages/Page/types';
 
-type PagePreviewResponse = {
-  page: {
-    id: string;
-    slug: string;
-    url: string | null;
-    urlPath: string;
-  } | null;
-};
-
-const PAGE_PREVIEW_QUERY = `
-  query GetPagePreview($token: String!) {
-    page(token: $token) {
-      id
-      slug
-      url
-      urlPath
-    }
-  }
-`;
+type PageMeta = Pick<Page, '__typename' | 'url' | 'contentType'>;
 
 export async function GET(request: Request) {
   try {
@@ -31,7 +15,7 @@ export async function GET(request: Request) {
       return new Response('Missing preview token', { status: 400 });
     }
 
-    const data = await cmsFetch<PagePreviewResponse>(PAGE_PREVIEW_QUERY, {
+    const data = await cmsFetch<{ page: PageMeta | null }>(GET_PAGE_META_BY_TOKEN, {
       token: previewToken,
     });
 
@@ -41,8 +25,11 @@ export async function GET(request: Request) {
 
     (await draftMode()).enable();
 
-    const targetUrl = data.page.url || `/${data.page.slug}`;
-    const redirectUrl = new URL(targetUrl, request.url);
+    if (!data.page.url) {
+      return new Response('Preview page has no public URL', { status: 404 });
+    }
+
+    const redirectUrl = new URL(data.page.url, request.url);
     redirectUrl.searchParams.set('token', previewToken);
 
     return NextResponse.redirect(redirectUrl);
