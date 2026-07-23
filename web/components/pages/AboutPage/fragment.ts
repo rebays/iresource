@@ -10,12 +10,15 @@ export const ABOUT_PAGE_FRAGMENT = /* GraphQL */ `
       width
       height
     }
-    pillarOneTitle
-    pillarOneText
-    pillarTwoTitle
-    pillarTwoText
-    pillarThreeTitle
-    pillarThreeText
+    pillars {
+      id
+      blockType
+      ... on PillarBlock {
+        title
+        text
+        icon
+      }
+    }
     supportHeading
     supportBody
     supportEmail

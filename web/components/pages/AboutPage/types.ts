@@ -8,18 +8,21 @@ type Image = {
   height: number;
 };
 
+export type PillarBlock = {
+  id: string;
+  blockType: 'PillarBlock';
+  title: string;
+  text: string;
+  icon: string;
+};
+
 export type AboutPage = Page & {
   __typename: 'AboutPage';
   lead: string;
   purposeHeading: string;
   purposeBody: string;
   purposeImage: Image | null;
-  pillarOneTitle: string;
-  pillarOneText: string;
-  pillarTwoTitle: string;
-  pillarTwoText: string;
-  pillarThreeTitle: string;
-  pillarThreeText: string;
+  pillars: PillarBlock[];
   supportHeading: string;
   supportBody: string;
   supportEmail: string;
